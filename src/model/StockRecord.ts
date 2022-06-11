@@ -33,7 +33,7 @@ class StockRecords {
         }
     }
 
-    async deleteInfo(){
+    async delete(){
         let field = {_id:mongojs.ObjectId(this.stockRecordId)}
         try {
             let data = await this.db.DELETE_DOCUMENT_WITH_FIELDS(this.stockRecordCollection,field)

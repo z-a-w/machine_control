@@ -47,7 +47,7 @@ class StockRecords {
             }
         });
     }
-    deleteInfo() {
+    delete() {
         return __awaiter(this, void 0, void 0, function* () {
             let field = { _id: mongojs_1.default.ObjectId(this.stockRecordId) };
             try {

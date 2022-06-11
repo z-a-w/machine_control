@@ -6,8 +6,4 @@ const systemController = new SystemController()
 
 router.post("/create-warehouse",systemController.createWarehouse)
 
-
-
-
-
 export default router

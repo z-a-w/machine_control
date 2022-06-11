@@ -7,6 +7,7 @@ import SystemRouter  from "./router/SystemRouter"
 import WarehouseRouter from "./router/WarehouseRouter"
 import StockRecordRouter from "./router/StockRecordRouter"
 import StockRouter from "./router/StockRouter"
+import AuthRouter from "./router/Authrouter"
 
 class App {
 
@@ -48,6 +49,7 @@ class App {
        this.app.use("/api/warehouse",WarehouseRouter)
        this.app.use("/api/stock-record",StockRecordRouter)
        this.app.use("/api/stock",StockRouter)
+       this.app.use("/api/auth/",AuthRouter)
       
 
     }
