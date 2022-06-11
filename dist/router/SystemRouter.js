@@ -8,4 +8,7 @@ const SystemController_1 = require("../controller/SystemController");
 const router = express_1.default.Router();
 const systemController = new SystemController_1.SystemController();
 router.post("/create-warehouse", systemController.createWarehouse);
+router.get("/get-warehouses", systemController.getWarehouses);
+router.post("/create-cbproduction", systemController.createCbProduction);
+router.get("/get-cbproductions", systemController.getCbProductions);
 exports.default = router;

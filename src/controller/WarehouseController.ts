@@ -2,12 +2,12 @@ import { WareHouse } from "../model/Warehouse";
 
 class WareHouseController {
     async getStock(req: any,res: any){
-    req.checkParams("warehouseId","warehouseId must be mongoId").notEmpty()
+    req.checkParams("id","id must be mongoId").notEmpty()
     let validationError = req.validationErrors()
     if(validationError) return res.status(400).json(validationError)
 
         try {
-            let warehouse = new WareHouse(req.params.warehouseId)
+            let warehouse = new WareHouse(req.params.id)
             let data = await warehouse.getStock()
             res.status(200).json(data)
         } catch (error) {

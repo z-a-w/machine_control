@@ -3,10 +3,11 @@ import bodyParser from "body-parser"
 import validator from "express-validator"
 const fileUpload = require("express-fileupload")
 
-import SystemRouter  from "./router/SystemRouter"
+import SystemRouter from "./router/SystemRouter"
 import WarehouseRouter from "./router/WarehouseRouter"
 import StockRecordRouter from "./router/StockRecordRouter"
 import StockRouter from "./router/StockRouter"
+import CbProductionRouter from "./router/CbProductionRouter"
 
 class App {
 
@@ -44,11 +45,11 @@ class App {
         this.app.use((req: any, res: any, next: any) => { this.configs.map((config: { name: string; val: string }) => res.set(config.name, config.val)); next() })
 
         // Use routes
-       this.app.use("/api/system",SystemRouter)
-       this.app.use("/api/warehouse",WarehouseRouter)
-       this.app.use("/api/stock-record",StockRecordRouter)
-       this.app.use("/api/stock",StockRouter)
-      
+        this.app.use("/api/system", SystemRouter)
+        this.app.use("/api/warehouse", WarehouseRouter)
+        this.app.use("/api/stock-record", StockRecordRouter)
+        this.app.use("/api/stock", StockRouter)
+        this.app.use("/api/cbproduction", CbProductionRouter)
 
     }
 

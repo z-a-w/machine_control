@@ -8,21 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.System = void 0;
+exports.UsedStock = void 0;
+const mongojs_1 = __importDefault(require("mongojs"));
 const db_1 = require("../db");
-class System {
-    constructor() {
-        this.stockCollection = "stocks";
-        this.wareHouseCollection = "warehouses";
-        this.stockRecordCollection = "stockRecords";
-        this.cbProductionCollection = "cbproductions";
+class UsedStock {
+    constructor(usedStockId) {
+        this.usedStockCollection = "used_stocks";
+        this.usedStockId = usedStockId;
         this.db = new db_1.DB();
     }
-    createWarehouse(wareHouse) {
+    getInfo() {
         return __awaiter(this, void 0, void 0, function* () {
+            let field = { _id: mongojs_1.default.ObjectId(this.usedStockId) };
             try {
-                let data = yield this.db.CREATE_DOCUMENT(this.wareHouseCollection, wareHouse);
+                let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.usedStockCollection, field);
                 this.db.db.close();
                 return data;
             }
@@ -31,10 +34,11 @@ class System {
             }
         });
     }
-    getWarehouses() {
+    updateInfo(updateData) {
         return __awaiter(this, void 0, void 0, function* () {
+            let field = { _id: mongojs_1.default.ObjectId(this.usedStockId) };
             try {
-                let data = yield this.db.GET_ALL_DOCUMENTS(this.wareHouseCollection);
+                let data = yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.usedStockCollection, field, { $set: updateData });
                 this.db.db.close();
                 return data;
             }
@@ -43,22 +47,11 @@ class System {
             }
         });
     }
-    createCbProduction(cbProduction) {
+    delete() {
         return __awaiter(this, void 0, void 0, function* () {
+            let field = { _id: mongojs_1.default.ObjectId(this.usedStockId) };
             try {
-                let data = yield this.db.CREATE_DOCUMENT(this.cbProductionCollection, cbProduction);
-                this.db.db.close();
-                return data;
-            }
-            catch (error) {
-                throw 500;
-            }
-        });
-    }
-    getCbProductions() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                let data = yield this.db.GET_ALL_DOCUMENTS(this.cbProductionCollection);
+                let data = yield this.db.DELETE_DOCUMENT_WITH_FIELDS(this.usedStockCollection, field);
                 this.db.db.close();
                 return data;
             }
@@ -68,4 +61,4 @@ class System {
         });
     }
 }
-exports.System = System;
+exports.UsedStock = UsedStock;

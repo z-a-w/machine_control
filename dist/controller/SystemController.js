@@ -30,5 +30,48 @@ class SystemController {
             }
         });
     }
+    getWarehouses(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let system = new System_1.System();
+                let data = yield system.getWarehouses();
+                res.status(200).json(data);
+            }
+            catch (error) {
+                res.status(error).json({ msg: "Server Error" });
+            }
+        });
+    }
+    createCbProduction(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            req.checkBody("name", "name should not be empty").notEmpty();
+            req.checkBody("location", "location should not be empty").notEmpty();
+            let validationErrors = req.validationErrors();
+            if (validationErrors)
+                return res.status(400).json(validationErrors);
+            req.body.createdAt = new Date();
+            req.body.rawItems = [];
+            try {
+                let system = new System_1.System();
+                let data = yield system.createCbProduction(req.body);
+                res.status(200).json(data);
+            }
+            catch (error) {
+                res.status(error).json({ msg: "Server Error" });
+            }
+        });
+    }
+    getCbProductions(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let system = new System_1.System();
+                let data = yield system.getCbProductions();
+                res.status(200).json(data);
+            }
+            catch (error) {
+                res.status(error).json({ msg: "Server Error" });
+            }
+        });
+    }
 }
 exports.SystemController = SystemController;

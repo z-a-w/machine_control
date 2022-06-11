@@ -17,12 +17,11 @@ class StockController {
 
     async updateInfo(req: any,res: any){
         req.checkParams("id","id must be mongoId").isMongoId()
-        req.checkBody("from" ,"from should not be empty").notEmpty()
         req.checkBody("name","name should not be empty").notEmpty()
-        req.checkBody("totalInstock","totalInstock must be number").isInt()
         req.checkBody("unit","unit should not be empty").notEmpty()
         let validationErrors = req.validationErrors()
         if(validationErrors) return res.status(400).json(validationErrors)
+        
         try {
             let stock = new Stock(req.params.id)
             let data = await stock.updateInfo(req.body)

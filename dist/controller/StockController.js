@@ -31,9 +31,7 @@ class StockController {
     updateInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             req.checkParams("id", "id must be mongoId").isMongoId();
-            req.checkBody("from", "from should not be empty").notEmpty();
             req.checkBody("name", "name should not be empty").notEmpty();
-            req.checkBody("totalInstock", "totalInstock must be number").isInt();
             req.checkBody("unit", "unit should not be empty").notEmpty();
             let validationErrors = req.validationErrors();
             if (validationErrors)

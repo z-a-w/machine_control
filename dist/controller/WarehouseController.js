@@ -14,12 +14,12 @@ const Warehouse_1 = require("../model/Warehouse");
 class WareHouseController {
     getStock(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            req.checkParams("warehouseId", "warehouseId must be mongoId").notEmpty();
+            req.checkParams("id", "id must be mongoId").notEmpty();
             let validationError = req.validationErrors();
             if (validationError)
                 return res.status(400).json(validationError);
             try {
-                let warehouse = new Warehouse_1.WareHouse(req.params.warehouseId);
+                let warehouse = new Warehouse_1.WareHouse(req.params.id);
                 let data = yield warehouse.getStock();
                 res.status(200).json(data);
             }

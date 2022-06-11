@@ -3,10 +3,9 @@ import { DB } from "../db"
 
 class Stock {
     stockCollection:string = "stocks"
-
-
     stockId :string
     db:any
+    
     constructor(stockId: string = "not_supported") {
         this.stockId = stockId
         this.db = new DB()
