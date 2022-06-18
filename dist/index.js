@@ -13,6 +13,9 @@ const StockRecordRouter_1 = __importDefault(require("./router/StockRecordRouter"
 const StockRouter_1 = __importDefault(require("./router/StockRouter"));
 const CbProductionRouter_1 = __importDefault(require("./router/CbProductionRouter"));
 const UsedStockManagerRouter_1 = __importDefault(require("./router/UsedStockManagerRouter"));
+const AuthRouter_1 = __importDefault(require("./router/AuthRouter"));
+const LeaderRouter_1 = __importDefault(require("./router/LeaderRouter"));
+const StockRecordManagerRouter_1 = __importDefault(require("./router/StockRecordManagerRouter"));
 class App {
     constructor() {
         this.port = 3000;
@@ -48,6 +51,9 @@ class App {
         this.app.use("/api/stock", StockRouter_1.default);
         this.app.use("/api/cbproduction", CbProductionRouter_1.default);
         this.app.use("/api/usedstock-manager", UsedStockManagerRouter_1.default);
+        this.app.use("/api/auth", AuthRouter_1.default);
+        this.app.use("/api/leader", LeaderRouter_1.default);
+        this.app.use("/api/stock-record-manager", StockRecordManagerRouter_1.default);
     }
     startServer() {
         this.app.listen(this.port, () => {

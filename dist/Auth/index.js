@@ -20,6 +20,7 @@ class Auth {
     constructor() {
         this.tokenKey = "bb2020$!@";
         this.operatorCollection = "operators";
+        this.leaderCollection = "leaders";
         this.db = new db_1.DB();
     }
     registerOperator(operatorData) {
@@ -70,6 +71,37 @@ class Auth {
                     throw 401;
                 else
                     return user;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
+    }
+    registerLeader(leader) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = yield this.db.CREATE_DOCUMENT(this.leaderCollection, leader);
+                data.token = jsonwebtoken_1.default.sign({ _id: data._id }, this.tokenKey);
+                this.db.db.close();
+                return data;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
+    }
+    loginLeader(phone, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let fields = { phone, password };
+            try {
+                let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.leaderCollection, fields);
+                this.db.db.close();
+                if (!data)
+                    throw 400;
+                else {
+                    data.token = jsonwebtoken_1.default.sign({ _id: data._id }, this.tokenKey);
+                    return data;
+                }
             }
             catch (error) {
                 throw error;

@@ -9,6 +9,9 @@ import StockRecordRouter from "./router/StockRecordRouter"
 import StockRouter from "./router/StockRouter"
 import CbProductionRouter from "./router/CbProductionRouter"
 import UsedStockManagerRouter from "./router/UsedStockManagerRouter"
+import AuthRouter from "./router/AuthRouter"
+import LeaderRouter from "./router/LeaderRouter"
+import StockRecordMangerRouter from "./router/StockRecordManagerRouter"
 
 class App {
 
@@ -52,7 +55,10 @@ class App {
         this.app.use("/api/stock", StockRouter)
         this.app.use("/api/cbproduction", CbProductionRouter)
         this.app.use("/api/usedstock-manager", UsedStockManagerRouter)
-
+       this.app.use("/api/auth",AuthRouter)
+       this.app.use("/api/leader",LeaderRouter)
+       this.app.use("/api/stock-record-manager",StockRecordMangerRouter)
+    
     }
 
     startServer() {
