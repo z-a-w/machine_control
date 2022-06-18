@@ -7,6 +7,7 @@ class Auth {
     db: any
     tokenKey: string = "bb2020$!@"
     operatorCollection:string = "operators"
+    leaderCollection:string = "leaders"
     constructor() {
         this.db = new DB()
     }
@@ -58,6 +59,34 @@ class Auth {
             throw error
         }
     }
+
+    async registerLeader(leader:any){
+        try {
+            let data = await this.db.CREATE_DOCUMENT(this.leaderCollection,leader)
+            data.token = jwt.sign({ _id:data._id}, this.tokenKey)
+            this.db.db.close()
+            return data
+        } catch (error) {
+            throw error
+        }
+    }
+
+    async loginLeader(phone:string,password:number){
+        let fields = {phone,password}
+        try {
+            let data = await this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.leaderCollection,fields)
+            this.db.db.close()
+            if(!data) throw 400
+            else{
+                data.token = jwt.sign({ _id: data._id},this.tokenKey)
+                return data
+            }
+        } catch (error) {
+            throw error
+        }
+    }
+
+
    
 
 }

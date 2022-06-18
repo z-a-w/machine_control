@@ -11,7 +11,9 @@ const SystemRouter_1 = __importDefault(require("./router/SystemRouter"));
 const WarehouseRouter_1 = __importDefault(require("./router/WarehouseRouter"));
 const StockRecordRouter_1 = __importDefault(require("./router/StockRecordRouter"));
 const StockRouter_1 = __importDefault(require("./router/StockRouter"));
-const Authrouter_1 = __importDefault(require("./router/Authrouter"));
+const AuthRouter_1 = __importDefault(require("./router/AuthRouter"));
+const LeaderRouter_1 = __importDefault(require("./router/LeaderRouter"));
+const StockRecordManagerRouter_1 = __importDefault(require("./router/StockRecordManagerRouter"));
 class App {
     constructor() {
         this.port = 3000;
@@ -45,7 +47,9 @@ class App {
         this.app.use("/api/warehouse", WarehouseRouter_1.default);
         this.app.use("/api/stock-record", StockRecordRouter_1.default);
         this.app.use("/api/stock", StockRouter_1.default);
-        this.app.use("/api/auth/", Authrouter_1.default);
+        this.app.use("/api/auth", AuthRouter_1.default);
+        this.app.use("/api/leader", LeaderRouter_1.default);
+        this.app.use("/api/stock-record-manager", StockRecordManagerRouter_1.default);
     }
     startServer() {
         this.app.listen(this.port, () => {

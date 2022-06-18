@@ -13,5 +13,5 @@ router.delete("/:id", warehouseController.delete);
 router.post("/create-new-stock/:id", warehouseController.createNewStock);
 router.get("/get-stock/:id", warehouseController.getStock);
 router.put("/stock-in/:warehouseId/:stockId", warehouseController.stockIn);
-router.put("/stock-out/:id", warehouseController.stockOut);
+router.put("/stock-out/:warehouseId/:stockId", warehouseController.stockOut);
 exports.default = router;

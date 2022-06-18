@@ -43,5 +43,7 @@ class StockRecords {
             throw 500
         }
     }
+
+    
 }
 export {StockRecords}

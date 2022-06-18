@@ -1,7 +1,7 @@
 import mongojs from "mongojs"
 import { DB } from "../db"
 
-class Stock {
+class Operator {
     operatorCollection:string = "operators"
     finalFineOutputCollection:string="final_fine_outputs"
     finalDamageOutPutCollection:string= "final_damage_outputs"
@@ -47,28 +47,29 @@ class Stock {
         }
     }
 
-    async finalFineOutput(count:number){
-        let field = {operatorId:this.operatorId}
-        try {
-            let updateData = {count :count}
-            let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.finalFineOutput,field,{$inc:{updateData}})
-            this.db.db.close()
-            return data
-        } catch (error) {
-            throw 500
-        }
-    }
+    // async finalFineOutput(count:number){
+    //     let field = {operatorId:this.operatorId}
+    //     try {
+    //         let updateData = {count :count}
+    //         let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.finalFineOutput,field,{$inc:{updateData}})
+    //         this.db.db.close()
+    //         return data
+    //     } catch (error) {
+    //         throw 500
+    //     }
+    // }
 
-    async fianlDamageOutput(count:number){
-        let field = {opertorId:this.operatorId}
-        try {
-            let updateData = {count:-count}
-            let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.finalDamageOutPutCollection,field,{$set:updateData})
-            this.db.db.close()
-            return data
-        } catch (error) {
-            throw 500
-        }
-    }
+    // async finalDamageOutput(count:number){
+    //     let field = {opertorId:this.operatorId}
+    //     try {
+    //         let updateData = {count:-count}
+    //         let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.finalDamageOutPutCollection,field,{$set:updateData})
+    //         this.db.db.close()
+    //         return data
+    //     } catch (error) {
+    //         throw 500
+    //     }
+    // }
 
 }
+export {Operator}

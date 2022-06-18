@@ -12,35 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Operator = void 0;
+exports.Leader = void 0;
 const mongojs_1 = __importDefault(require("mongojs"));
 const db_1 = require("../db");
-class Operator {
-    constructor(operatorId = "not_supported") {
-        this.operatorCollection = "operators";
-        this.finalFineOutputCollection = "final_fine_outputs";
-        this.finalDamageOutPutCollection = "final_damage_outputs";
-        this.operatorId = operatorId;
+class Leader {
+    constructor(leaderId) {
+        this.leaderCollection = "leaders";
+        this.assignCollection = "assigns";
+        this.leaderId = leaderId;
         this.db = new db_1.DB();
     }
     getInfo() {
         return __awaiter(this, void 0, void 0, function* () {
-            let field = { _id: mongojs_1.default.ObjectId(this.operatorId) };
+            let field = { _id: mongojs_1.default.ObjectId(this.leaderId) };
             try {
-                let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.operatorCollection, field);
+                let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.leaderCollection, field);
                 this.db.db.close();
                 return data;
             }
             catch (error) {
-                throw 500;
+                throw 5000;
             }
         });
     }
     updateInfo(updateData) {
         return __awaiter(this, void 0, void 0, function* () {
-            let field = { _id: mongojs_1.default.ObjectId(this.operatorId) };
+            let field = { _id: mongojs_1.default.ObjectId(this.leaderId) };
             try {
-                let data = yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.operatorCollection, field, { $set: updateData });
+                let data = yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.leaderCollection, field, { $set: updateData });
                 this.db.db.close();
                 return data;
             }
@@ -51,9 +50,21 @@ class Operator {
     }
     delete() {
         return __awaiter(this, void 0, void 0, function* () {
-            let field = { _id: mongojs_1.default.ObjectId(this.operatorId) };
+            let field = { _id: mongojs_1.default.ObjectId(this.leaderId) };
             try {
-                let data = yield this.db.DELETE_DOCUMENT_WITH_FIELDS(this.operatorCollection, field);
+                let data = yield this.db.DELETE_DOCUMENT_WITH_FIELDS(this.leaderCollection, field);
+                this.db.db.close();
+                return data;
+            }
+            catch (error) {
+                throw 500;
+            }
+        });
+    }
+    assign(assign) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                let data = yield this.db.CREATE_DOCUMENT(this.assignCollection, assign);
                 this.db.db.close();
                 return data;
             }
@@ -63,4 +74,4 @@ class Operator {
         });
     }
 }
-exports.Operator = Operator;
+exports.Leader = Leader;
