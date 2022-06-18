@@ -31,13 +31,13 @@ class StockController {
         }
     }
 
-    async deleteInfo(req: any,res: any){
+    async delete(req: any,res: any){
         req.checkParams("id","id must be mongoId").isMongoId()
         let validationErrors = req.validationErrors()
         if(validationErrors) return res.status(400).json(validationErrors)
         try {
             let stock = new Stock(req.params.id)
-            let data = await stock.deleteInfo()
+            let data = await stock.delete()
             res.status(200).json(data)
         } catch (error) {
             res.status(500).json(error)

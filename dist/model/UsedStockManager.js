@@ -16,10 +16,19 @@ class UsedStockManager {
         this.usedStockCollection = "used_stocks";
         this.db = new db_1.DB();
     }
-    createUsedStock(usedStock) {
+    getDataWithRange(rawId, cbproductionId, startDate, endDate) {
         return __awaiter(this, void 0, void 0, function* () {
+            let field = {
+                rawId,
+                cbproductionId,
+                createdAt: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate)
+                }
+            };
             try {
-                let data = yield this.db.CREATE_DOCUMENT(this.usedStockCollection, usedStock);
+                let data = yield this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.usedStockCollection, field);
+                this.db.db.close();
                 return data;
             }
             catch (error) {

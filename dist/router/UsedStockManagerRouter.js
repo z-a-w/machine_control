@@ -4,10 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const StockController_1 = require("../controller/StockController");
+const UsedStockManagerController_1 = require("../controller/UsedStockManagerController");
 const router = express_1.default.Router();
-const stockController = new StockController_1.StockController();
-router.get("/get-info/:id", stockController.getInfo);
-router.put("/update-info/:id", stockController.updateInfo);
-router.delete("/:id", stockController.delete);
+const usedStockManagerController = new UsedStockManagerController_1.UsedStockManagerController();
+router.post("/get-data-with-range/:rawId/:cbproductionId", usedStockManagerController.getDataWithRange);
 exports.default = router;

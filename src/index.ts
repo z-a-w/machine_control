@@ -8,6 +8,7 @@ import WarehouseRouter from "./router/WarehouseRouter"
 import StockRecordRouter from "./router/StockRecordRouter"
 import StockRouter from "./router/StockRouter"
 import CbProductionRouter from "./router/CbProductionRouter"
+import UsedStockManagerRouter from "./router/UsedStockManagerRouter"
 
 class App {
 
@@ -50,6 +51,7 @@ class App {
         this.app.use("/api/stock-record", StockRecordRouter)
         this.app.use("/api/stock", StockRouter)
         this.app.use("/api/cbproduction", CbProductionRouter)
+        this.app.use("/api/usedstock-manager", UsedStockManagerRouter)
 
     }
 

@@ -46,7 +46,7 @@ class StockController {
             }
         });
     }
-    deleteInfo(req, res) {
+    delete(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             req.checkParams("id", "id must be mongoId").isMongoId();
             let validationErrors = req.validationErrors();
@@ -54,7 +54,7 @@ class StockController {
                 return res.status(400).json(validationErrors);
             try {
                 let stock = new Stock_1.Stock(req.params.id);
-                let data = yield stock.deleteInfo();
+                let data = yield stock.delete();
                 res.status(200).json(data);
             }
             catch (error) {

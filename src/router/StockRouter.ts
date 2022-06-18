@@ -4,6 +4,6 @@ const router = express.Router()
 const  stockController= new StockController()
 
 router.get("/get-info/:id",stockController.getInfo)
-router.put("update-info/:id",stockController.updateInfo)
-router.delete("/:id",stockController.deleteInfo)
+router.put("/update-info/:id",stockController.updateInfo)
+router.delete("/:id",stockController.delete)
 export default router

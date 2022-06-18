@@ -76,17 +76,19 @@ class CbProductionController {
         }
     }
 
-    async getRaw(req: any, res: any) {
+    async changeRaw(req: any, res: any) {
         req.checkParams("id", "id should be mongoId").isMongoId()
         req.checkBody("rawId", "rawId should be mongoId").isMongoId()
         req.checkBody("count", "chound should be number").isInt()
+        req.checkBody("outCount", "outCould should be number").isInt()
+        req.checkBody("damagedCount", "damagedCount should be number").isInt()
         let validationErrors = req.validationErrors()
         if (validationErrors) return res.status(400).json(validationErrors)
 
         let cbProduction = new CbProduction(req.params.id)
         try {
-            let data = await cbProduction.getRaw(req.body.rawId, req.body.count)
-            res.status(200).json(data)
+            await cbProduction.changeRaw(req.body.rawId, req.body.count, req.body.outCount, req.body.damagedCount)
+            res.status(200).json({ msg: "Raw changed successfully " })
         } catch (error) {
             res.status(error).json({ msg: "Server error" })
         }

@@ -19,6 +19,8 @@ class CbProduction {
     constructor(cbProductionId) {
         this.cbProductionCollection = "cbproductions";
         this.stockCollection = "stocks";
+        this.stockRecordCollection = "stockRecords";
+        this.usedStockCollection = "used_stocks";
         this.cbProductionId = cbProductionId;
         this.db = new db_1.DB();
     }
@@ -89,34 +91,76 @@ class CbProduction {
             }
         });
     }
-    getRaw(rawId, count) {
+    changeRaw(rawId, rawCount, outCount, damagedCount) {
         return __awaiter(this, void 0, void 0, function* () {
             // Check the old raw from model
             let cpField = { _id: mongojs_1.default.ObjectId(this.cbProductionId), "raws.rawId": rawId };
+            let oldRawCount;
+            let totalOutputCount;
             try {
-                let data = this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, cpField);
-                return data;
+                let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, cpField, { raws: 1, totalOutputCount: 1 });
+                totalOutputCount = data.totalOutputCount;
+                data.raws.map((raw) => {
+                    if (raw.rawId === rawId)
+                        oldRawCount = raw.input;
+                });
+            }
+            catch (error) {
+                console.log(error);
+                throw 500;
+            }
+            // Insert data to the used collection
+            let netCount = outCount - totalOutputCount;
+            let usedData = {
+                count: oldRawCount,
+                fineOut: netCount - damagedCount,
+                damagedOut: damagedCount,
+                totalOut: outCount,
+                rawId: rawId,
+                cbproductionId: this.cbProductionId,
+                createdAt: new Date(),
+            };
+            try {
+                yield this.db.CREATE_DOCUMENT(this.usedStockCollection, usedData);
             }
             catch (error) {
                 throw 500;
             }
-            // // Check the old raw from model
-            // let cpField = { _id: mongojs.ObjectId(this.cbProductionId), "raws.rawId": rawId }
-            // // Remove from stock collection
-            // let stockField = { _id: mongojs.ObjectId(rawId) }
-            // let stockUpdateField = { $inc: { totalInstock: -count } }
-            // try {
-            //     await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.stockCollection, stockField, stockUpdateField)
-            // } catch (error) {
-            //     throw 500
-            // }
-            // // Insert to the model
-            // let cpUpdateField = { $set: { "raws.$.input": count } }
-            // try {
-            //     await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, cpField, cpUpdateField)
-            // } catch (error) {
-            //     throw 500
-            // }
+            // Remove from the stock collection
+            let stockField = { _id: mongojs_1.default.ObjectId(rawId) };
+            let stockUpdateField = { $inc: { totalInstock: -rawCount } };
+            try {
+                yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.stockCollection, stockField, stockUpdateField);
+            }
+            catch (error) {
+                throw 500;
+            }
+            // Insert into the stock record
+            try {
+                let stockData = yield this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.stockCollection, stockField);
+                let recordData = {
+                    from: stockData.from,
+                    item: rawId,
+                    type: "get",
+                    count: rawCount,
+                    unit: stockData.unit,
+                    createdAt: new Date()
+                };
+                yield this.db.CREATE_DOCUMENT(this.stockRecordCollection, recordData);
+            }
+            catch (error) {
+                throw 500;
+            }
+            // Update in the model
+            let cpUpdateField = { $set: { "raws.$.input": rawCount } };
+            try {
+                yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, cpField, cpUpdateField);
+                this.db.db.close();
+                return;
+            }
+            catch (error) {
+                throw 500;
+            }
         });
     }
 }

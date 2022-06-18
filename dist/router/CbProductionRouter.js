@@ -12,5 +12,5 @@ router.put("/update-info/", cbProductionController.updateInfo);
 router.delete("/:id", cbProductionController.delete);
 router.patch("/insert-raw/:id/:rawId", cbProductionController.insertRaw);
 router.patch("/remove-raw/:id/:rawId", cbProductionController.removeRaw);
-router.get("/get-raw/:id", cbProductionController.getRaw);
+router.put("/get-raw/:id", cbProductionController.changeRaw);
 exports.default = router;

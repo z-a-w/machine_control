@@ -9,5 +9,5 @@ const router = express_1.default.Router();
 const stockRecordController = new StockRecordController_1.StockRecordController();
 router.get("/get-info/:id", stockRecordController.getInfo);
 router.put("/update-info/:id", stockRecordController.updateInfo);
-router.delete("/:id", stockRecordController.deleteInfo);
+router.delete("/:id", stockRecordController.delete);
 exports.default = router;

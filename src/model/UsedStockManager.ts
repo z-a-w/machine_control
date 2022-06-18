@@ -10,9 +10,18 @@ class UsedStockManager {
         this.db = new DB()
     }
 
-    async createUsedStock(usedStock: any) {
+    async getDataWithRange(rawId: string, cbproductionId: string, startDate: string, endDate: string) {
+        let field = {
+            rawId,
+            cbproductionId,
+            createdAt: {
+                $gte: new Date(startDate),
+                $lte: new Date(endDate)
+            }
+        }
         try {
-            let data = await this.db.CREATE_DOCUMENT(this.usedStockCollection, usedStock)
+            let data = await this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.usedStockCollection, field)
+            this.db.db.close()
             return data
         } catch (error) {
             throw 500
