@@ -48,10 +48,12 @@ class LeaderController {
 
     async assign(req:any,res:any){
         req.checkParams("leaderId","leaderId must be mongo Id").isMongoId()
+        req.checkBody("cbProductionId","cbProductionId should not be empty").notEmpty
         req.checkBody("operatorId","operatorId must be mongoId").isMongoId()
         req.checkBody("count","count should be number").isInt()
         let validationError = req.validationErrors()
         if(validationError) return res.status(400).json(validationError)
+        req.body.leaderId = req.params.leaderId
         req.body.createdAt  = new Date()
         try {
             let leader = new Leader(req.params.id)

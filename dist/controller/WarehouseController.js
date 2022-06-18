@@ -84,6 +84,8 @@ class WareHouseController {
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("totalInstock", "totalInstock must be number").isInt();
             req.checkBody("unit", "unit should not be empty").notEmpty();
+            req.checkBody("detail", "detail should not be empty").notEmpty();
+            req.checkBody("showAlertAt", "showAlertAt should not be empty").notEmpty();
             let validationError = req.validationErrors();
             if (validationError)
                 return res.status(400).json(validationError);

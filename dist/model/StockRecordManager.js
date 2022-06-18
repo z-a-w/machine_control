@@ -26,7 +26,6 @@ class StockRcordManager {
                     $lt: new Date(endDate),
                 }
             };
-            console.log(field);
             try {
                 let data = yield this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.stockRecordCollection, field);
                 console.log(data);

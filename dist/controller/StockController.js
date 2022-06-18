@@ -33,6 +33,7 @@ class StockController {
             req.checkParams("id", "id must be mongoId").isMongoId();
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("unit", "unit should not be empty").notEmpty();
+            req.checkBody("detail", "detail should not be empty").notEmpty();
             let validationErrors = req.validationErrors();
             if (validationErrors)
                 return res.status(400).json(validationErrors);

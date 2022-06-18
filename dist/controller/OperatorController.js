@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.OperatorController = void 0;
 const Operator_1 = require("../model/Operator");
 class OperatorController {
     getInfo(req, res) {
@@ -65,3 +66,4 @@ class OperatorController {
         });
     }
 }
+exports.OperatorController = OperatorController;

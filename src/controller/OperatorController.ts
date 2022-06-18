@@ -48,3 +48,4 @@ class OperatorController{
 
     
 }
+export {OperatorController}

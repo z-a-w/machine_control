@@ -90,7 +90,7 @@ class CbProduction {
         // Insert data to the used collection
         let netCount = outCount - totalOutputCount
         let usedData = {
-            count: oldRawCount,
+            rawCount: oldRawCount,
             fineOut: netCount - damagedCount,
             damagedOut: damagedCount,
             totalOut: outCount,
