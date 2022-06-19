@@ -49,7 +49,7 @@ class CbProduction {
 
     async insertRaw(rawId: string) {
         let field = { _id: mongojs.ObjectId(this.cbProductionId) }
-        let updateField = { $push: { raws: { rawId, input: 0 } } }
+        let updateField = { $push: { raws: { rawId, input: 0, lastOutput: 0 } } }
         try {
             let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, field, updateField)
             this.db.db.close()
@@ -76,11 +76,15 @@ class CbProduction {
         let cpField = { _id: mongojs.ObjectId(this.cbProductionId), "raws.rawId": rawId }
         let oldRawCount
         let totalOutputCount
+        let lastOutput = 0
         try {
             let data = await this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, cpField, { raws: 1, totalOutputCount: 1 })
             totalOutputCount = data.totalOutputCount
             data.raws.map((raw: any) => {
-                if (raw.rawId === rawId) oldRawCount = raw.input
+                if (raw.rawId === rawId) {
+                    oldRawCount = raw.input
+                    lastOutput = raw.lastOutput
+                }
             })
         } catch (error) {
             console.log(error)
@@ -88,7 +92,7 @@ class CbProduction {
         }
 
         // Insert data to the used collection
-        let netCount = outCount - totalOutputCount
+        let netCount = outCount - (totalOutputCount + lastOutput)
         let usedData = {
             rawCount: oldRawCount,
             fineOut: netCount - damagedCount,
@@ -131,7 +135,8 @@ class CbProduction {
         }
 
         // Update in the model
-        let cpUpdateField = { $set: { "raws.$.input": rawCount } }
+        let newLastOutput = netCount + lastOutput
+        let cpUpdateField = { $set: { "raws.$.input": rawCount, "raws.$.lastOutput": newLastOutput } }
         try {
             await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, cpField, cpUpdateField)
             this.db.db.close()

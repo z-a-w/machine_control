@@ -66,7 +66,7 @@ class CbProduction {
     insertRaw(rawId) {
         return __awaiter(this, void 0, void 0, function* () {
             let field = { _id: mongojs_1.default.ObjectId(this.cbProductionId) };
-            let updateField = { $push: { raws: { rawId, input: 0 } } };
+            let updateField = { $push: { raws: { rawId, input: 0, lastOutput: 0 } } };
             try {
                 let data = yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, field, updateField);
                 this.db.db.close();
@@ -97,12 +97,15 @@ class CbProduction {
             let cpField = { _id: mongojs_1.default.ObjectId(this.cbProductionId), "raws.rawId": rawId };
             let oldRawCount;
             let totalOutputCount;
+            let lastOutput = 0;
             try {
                 let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, cpField, { raws: 1, totalOutputCount: 1 });
                 totalOutputCount = data.totalOutputCount;
                 data.raws.map((raw) => {
-                    if (raw.rawId === rawId)
+                    if (raw.rawId === rawId) {
                         oldRawCount = raw.input;
+                        lastOutput = raw.lastOutput;
+                    }
                 });
             }
             catch (error) {
@@ -110,7 +113,7 @@ class CbProduction {
                 throw 500;
             }
             // Insert data to the used collection
-            let netCount = outCount - totalOutputCount;
+            let netCount = outCount - (totalOutputCount + lastOutput);
             let usedData = {
                 rawCount: oldRawCount,
                 fineOut: netCount - damagedCount,
@@ -152,7 +155,8 @@ class CbProduction {
                 throw 500;
             }
             // Update in the model
-            let cpUpdateField = { $set: { "raws.$.input": rawCount } };
+            let newLastOutput = netCount + lastOutput;
+            let cpUpdateField = { $set: { "raws.$.input": rawCount, "raws.$.lastOutput": newLastOutput } };
             try {
                 yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.cbProductionCollection, cpField, cpUpdateField);
                 this.db.db.close();
