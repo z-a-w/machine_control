@@ -23,16 +23,16 @@ class UsedStock {
         }
     }
 
-    async updateInfo(updateData: any) {
-        let field = { _id: mongojs.ObjectId(this.usedStockId) }
-        try {
-            let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.usedStockCollection, field, { $set: updateData })
-            this.db.db.close()
-            return data
-        } catch (error) {
-            throw 500
-        }
-    }
+    // async updateInfo(updateData: any) {
+    //     let field = { _id: mongojs.ObjectId(this.usedStockId) }
+    //     try {
+    //         let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.usedStockCollection, field, { $set: updateData })
+    //         this.db.db.close()
+    //         return data
+    //     } catch (error) {
+    //         throw 500
+    //     }
+    // }
 
     async delete() {
         let field = { _id: mongojs.ObjectId(this.usedStockId) }

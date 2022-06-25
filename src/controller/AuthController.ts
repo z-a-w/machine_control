@@ -43,6 +43,7 @@ class AuthController {
         }
     }
 
+
     async registerLeader(req: any,res: any){
     req.checkBody("name","name should not be empty").notEmpty()
     req.checkBody("phone","phone should not be empty").notEmpty()
@@ -74,6 +75,16 @@ class AuthController {
         }
 
 
+    }
+    async verifyLeader(req:any,res:any){
+        const token: string = req.headers['x-access-token']
+        try {
+            let auth = new Auth()
+            let data = await auth.verifyLeader(token)
+            res.status(200).json(data)
+        } catch (error) {
+            res.status(500).json({msg:"Server Error"})
+        }
     }
     
 }
