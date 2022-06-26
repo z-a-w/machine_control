@@ -1,37 +1,43 @@
-import fs = require("fs-extra")
-import { Config } from "../Config"
+const fs = require("fs-extra");
 class FileStorage {
-    config: any
+  uploadTempDir: string =
+    "/home/mohmoh/work/machine/machine_control/dist/uploads";
+  uploadDistDir: string = "/mnt/uploads";
+  staticRoute: string = "http://localhost:3000";
 
-    constructor() {
-        this.config = new Config()
+  async uploadPhoto(folder: string, fileName: string) {
+    try {
+      //move file
+      fs.move(
+        `${this.uploadTempDir}/${fileName}`,
+        `${this.uploadDistDir}/photos/${folder}/${fileName}`
+      );
+      //success return link
+      return `${this.staticRoute}/photos/${folder}/${fileName}`;
+    } catch (error: any) {
+      // onError return error
+      console.log(error);
+      throw new Error(error);
     }
+  }
 
-    async uploadFile(folder: string, fileName: string) {
-        try {
-            fs.move(
-                `${this.config.uploadTempDir}/${fileName}`,
-                `${this.config.uploadDistDir}/${folder}/${fileName}`
-            )
+  async deletePhoto(folder: string, fileName: string) {
+    try {
+      let exists = await fs.exists(
+        `${this.uploadDistDir}/photos/${folder}/${fileName}`
+      );
+      if (!exists) return ;
 
-            return `/${folder}/${fileName}`
-        } catch (error) {
-            throw 500
-        }
+      try {
+        await fs.unlink(`${this.uploadDistDir}/photos/${folder}/${fileName}`);
+        return;
+      } catch (error) {
+        throw 500;
+      }
+    } catch (error: any) {
+      throw error;
     }
-
-    async deleteFile(folder: string, fileName: string) {
-        let exists = await fs.exists(`${this.config.uploadDistDir}/${folder}/${fileName}`)
-        if (!exists) return false
-
-        try {
-            await fs.unlink(`${this.config.uploadDistDir}/${folder}/${fileName}`)
-            return
-        } catch (error) {
-            throw 500
-        }
-    }
-
+  }
 }
 
-export {FileStorage}
+export { FileStorage };

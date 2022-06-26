@@ -4,6 +4,7 @@ class SystemController {
 
     async createWarehouse(req: any, res: any) {
         req.checkBody("name", "name should not be empty").notEmpty()
+        req.checkBody("photo","photo should not be empty").notEmpty()
         req.checkBody("location", "location should not be empty").notEmpty()
         req.checkBody("note","note should not be empty").notEmpty()
         let validationErrors = req.validationErrors()
@@ -31,6 +32,7 @@ class SystemController {
 
     async createCbProduction(req: any, res: any) {
         req.checkBody("name", "name should not be empty").notEmpty()
+        req.checkBody("photo","photo should not be empty").notEmpty()
         req.checkBody("totalOutputCount", "total output count").isInt()
         req.checkBody("location", "location should not be empty").notEmpty()
         req.checkBody("note","note should not be empty").notEmpty()

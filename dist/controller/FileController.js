@@ -25,7 +25,7 @@ class FileController {
             file.mv(`${config.uploadTempDir}/${fileName}`);
             try {
                 let fileStorage = new FileStorage_1.FileStorage();
-                let url = yield fileStorage.uploadFile(req.params.folder, fileName);
+                let url = yield fileStorage.uploadPhoto(req.params.folder, fileName);
                 res.status(200).json(url);
             }
             catch (error) {
@@ -42,7 +42,7 @@ class FileController {
                 return res.status(400).json(validationErrors);
             try {
                 let fileStorage = new FileStorage_1.FileStorage();
-                yield fileStorage.deleteFile(req.params.folder, req.params.fileName);
+                yield fileStorage.deletePhoto(req.params.folder, req.params.fileName);
                 res.status(200).json({ msg: "File deleted !" });
             }
             catch (error) {

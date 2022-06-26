@@ -1,5 +1,6 @@
-import { FileStorage } from "../FileStorage";
-import { Config } from "../Config";
+import { FileStorage } from "../FileStorage"
+import { Config } from "../Config"
+
 class FileController {
 
     async uploadFile(req: any, res: any) {
@@ -14,7 +15,7 @@ class FileController {
 
         try {
             let fileStorage = new FileStorage()
-            let url = await fileStorage.uploadFile(req.params.folder, fileName)
+            let url = await fileStorage.uploadPhoto(req.params.folder, fileName)
             res.status(200).json(url)
         } catch (error) {
             res.status(error).json({msg: "Unable to upload file"})
@@ -29,7 +30,7 @@ class FileController {
 
         try {
             let fileStorage = new FileStorage()
-            await fileStorage.deleteFile(req.params.folder, req.params.fileName)
+            await fileStorage.deletePhoto(req.params.folder, req.params.fileName)
             res.status(200).json({msg: "File deleted !"})
         } catch (error) {
             res.status(error).json({msg: "Unable to delete file"})

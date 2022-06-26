@@ -18,6 +18,7 @@ class StockController {
     async updateInfo(req: any,res: any){
         req.checkParams("id","id must be mongoId").isMongoId()
         req.checkBody("name","name should not be empty").notEmpty()
+        req.checkBody("photo","photo should not be empty").notEmpty()
         req.checkBody("unit","unit should not be empty").notEmpty()
         req.checkBody("detail","detail should not be empty").notEmpty()
         let validationErrors = req.validationErrors()

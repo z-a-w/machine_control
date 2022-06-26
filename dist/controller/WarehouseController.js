@@ -83,6 +83,7 @@ class WareHouseController {
         return __awaiter(this, void 0, void 0, function* () {
             req.checkParams("id", "id must be mongo Id").isMongoId();
             req.checkBody("name", "name should not be empty").notEmpty();
+            req.checkBody("photo", "photo should not be empty").notEmpty();
             req.checkBody("totalInstock", "totalInstock must be number").isInt();
             req.checkBody("unit", "unit should not be empty").notEmpty();
             req.checkBody("detail", "detail should not be empty").notEmpty();
