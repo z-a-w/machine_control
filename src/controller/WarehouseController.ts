@@ -20,6 +20,7 @@ class WareHouseController {
         req.checkParams("id","id must be mongo Id").isMongoId()
         req.checkBody("name","name should not be empty").notEmpty()
         req.checkBody("location","location should not be empty").notEmpty()
+        req.checkBody("note","note should not be empty").notEmpty()
         let validationError = req.validationErrors()
         if(validationError) return res.status(400).json(validationError)
         try {

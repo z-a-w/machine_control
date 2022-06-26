@@ -108,5 +108,28 @@ class Auth {
             }
         });
     }
+    verifyLeader(token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let decodedToken;
+            try {
+                decodedToken = jsonwebtoken_1.default.verify(token, this.tokenKey);
+            }
+            catch (error) {
+                throw 400;
+            }
+            let fields = { _id: mongojs_1.default.ObjectId(decodedToken._id) };
+            try {
+                let user = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.leaderCollection, fields);
+                this.db.db.close();
+                if (!user)
+                    throw 401;
+                else
+                    return user;
+            }
+            catch (error) {
+                throw error;
+            }
+        });
+    }
 }
 exports.Auth = Auth;

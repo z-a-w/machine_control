@@ -86,6 +86,26 @@ class Auth {
         }
     }
 
+    async verifyLeader(token: string) {
+        let decodedToken
+        try {
+            decodedToken = jwt.verify(token, this.tokenKey)
+        } catch (error) {
+            throw 400
+        }
+
+        let fields = { _id: mongojs.ObjectId(decodedToken._id) }
+
+        try {
+            let user = await this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.leaderCollection, fields)
+            this.db.db.close()
+            if (!user) throw 401
+            else return user
+        } catch (error) {
+            throw error
+        }
+    }
+
 
    
 

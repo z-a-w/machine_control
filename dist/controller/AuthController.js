@@ -99,5 +99,18 @@ class AuthController {
             }
         });
     }
+    verifyLeader(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const token = req.headers['x-access-token'];
+            try {
+                let auth = new Auth_1.Auth();
+                let data = yield auth.verifyLeader(token);
+                res.status(200).json(data);
+            }
+            catch (error) {
+                res.status(500).json({ msg: "Server Error" });
+            }
+        });
+    }
 }
 exports.AuthController = AuthController;

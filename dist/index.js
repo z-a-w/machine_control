@@ -20,6 +20,7 @@ const Assign_Router_1 = __importDefault(require("./router/Assign Router"));
 const LeaderManagerRouter_1 = __importDefault(require("./router/LeaderManagerRouter"));
 const OperatorRouter_1 = __importDefault(require("./router/OperatorRouter"));
 const OperatorManagerRouter_1 = __importDefault(require("./router/OperatorManagerRouter"));
+const FileRouter_1 = __importDefault(require("./router/FileRouter"));
 class App {
     constructor() {
         this.port = 3000;
@@ -62,6 +63,7 @@ class App {
         this.app.use("/api/assign", Assign_Router_1.default);
         this.app.use("/api/operator", OperatorRouter_1.default);
         this.app.use("/api/operator-manager", OperatorManagerRouter_1.default);
+        this.app.use("/api/file", FileRouter_1.default);
     }
     startServer() {
         this.app.listen(this.port, () => {
