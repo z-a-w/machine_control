@@ -11,7 +11,7 @@ class WareHouseController {
             let data = await warehouse.getInfo()
             res.status(200).json(data)
         } catch (error) {
-            res.status(500).json({msg:"Server Error"})
+            res.status(error).json({msg:"Server Error"})
         }
     }
 
@@ -28,7 +28,7 @@ class WareHouseController {
             await warehouse.updateInfo(req.body)
             res.status(200).json({msg:" Warehouse Updated!"})
         } catch (error) {
-            res.status(500).json({msg:"Server Error"})
+            res.status(error).json({msg:"Server Error"})
         }
     }
     
@@ -41,7 +41,7 @@ class WareHouseController {
             await warehouse.delete()
             res.status(200).json({msg:" Warehouse Deleted!"})
         } catch (error) {
-            res.status(500).json({msg:"Server Error!"})
+            res.status(error).json({msg:"Server Error!"})
         }
     }
 
@@ -55,7 +55,7 @@ class WareHouseController {
             let data = await warehouse.getStocks()
             res.status(200).json(data)
         } catch (error) {
-            res.status(500).json({msg:"Sever Error"})
+            res.status(error).json({msg:"Sever Error"})
         }
     }
 
@@ -76,7 +76,7 @@ class WareHouseController {
             await wareHouse.createNewStock(req.body)
             res.status(200).json({msg:"stock created"})
         } catch (error) {
-            res.status(500).json({msg:"Server Error"})
+            res.status(error).json({msg:"Server Error"})
         }
 
     }
@@ -92,7 +92,7 @@ class WareHouseController {
             await warehouse.stockIn(req.params.stockId,req.body.amount)
             res.status(200).json({msg:"Stock Increased"})
         } catch (error) {
-            res.status(500).json({msg:"Server Error"})
+            res.status(error).json({msg:"Server Error"})
         }
     }
 
@@ -107,7 +107,7 @@ class WareHouseController {
             await warehouse.stockOut(req.params.stockId,req.body.amount)
             res.status(200).json({msg:"Stock Decreased"})
         } catch (error) {
-            res.status(500).json({msg:"Server Error"})
+            res.status(error).json({msg:"Server Error"})
         }
     }
 

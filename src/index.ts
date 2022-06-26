@@ -2,7 +2,6 @@ import express from "express"
 import bodyParser from "body-parser"
 import validator from "express-validator"
 const fileUpload = require("express-fileupload")
-import multer from "multer"
 
 import SystemRouter from "./router/SystemRouter"
 import WarehouseRouter from "./router/WarehouseRouter"
@@ -50,8 +49,6 @@ class App {
         this.app.use(bodyParser.urlencoded({ extended: true }))
         this.app.use(validator())
         this.app.use(fileUpload({ createParentPath: true }))
-        this.app.use(multer())
-
         // Use express application configs
         this.app.use((req: any, res: any, next: any) => { this.configs.map((config: { name: string; val: string }) => res.set(config.name, config.val)); next() })
 
@@ -71,6 +68,8 @@ class App {
         this.app.use("/api/operator-manager",OperatorManagerRouter)
         this.app.use("/api/file",FileRouter)
         
+        // Static route
+        this.app.use(express.static("/mnt/uploads/"))
     }
 
     startServer() {

@@ -24,7 +24,7 @@ class WareHouseController {
                 res.status(200).json(data);
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error" });
+                res.status(error).json({ msg: "Server Error" });
             }
         });
     }
@@ -33,6 +33,7 @@ class WareHouseController {
             req.checkParams("id", "id must be mongo Id").isMongoId();
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("location", "location should not be empty").notEmpty();
+            req.checkBody("note", "note should not be empty").notEmpty();
             let validationError = req.validationErrors();
             if (validationError)
                 return res.status(400).json(validationError);
@@ -42,7 +43,7 @@ class WareHouseController {
                 res.status(200).json({ msg: " Warehouse Updated!" });
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error" });
+                res.status(error).json({ msg: "Server Error" });
             }
         });
     }
@@ -58,7 +59,7 @@ class WareHouseController {
                 res.status(200).json({ msg: " Warehouse Deleted!" });
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error!" });
+                res.status(error).json({ msg: "Server Error!" });
             }
         });
     }
@@ -74,7 +75,7 @@ class WareHouseController {
                 res.status(200).json(data);
             }
             catch (error) {
-                res.status(500).json({ msg: "Sever Error" });
+                res.status(error).json({ msg: "Sever Error" });
             }
         });
     }
@@ -97,7 +98,7 @@ class WareHouseController {
                 res.status(200).json({ msg: "stock created" });
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error" });
+                res.status(error).json({ msg: "Server Error" });
             }
         });
     }
@@ -115,7 +116,7 @@ class WareHouseController {
                 res.status(200).json({ msg: "Stock Increased" });
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error" });
+                res.status(error).json({ msg: "Server Error" });
             }
         });
     }
@@ -133,7 +134,7 @@ class WareHouseController {
                 res.status(200).json({ msg: "Stock Decreased" });
             }
             catch (error) {
-                res.status(500).json({ msg: "Server Error" });
+                res.status(error).json({ msg: "Server Error" });
             }
         });
     }

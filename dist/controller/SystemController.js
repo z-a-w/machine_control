@@ -16,6 +16,7 @@ class SystemController {
         return __awaiter(this, void 0, void 0, function* () {
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("location", "location should not be empty").notEmpty();
+            req.checkBody("note", "note should not be empty").notEmpty();
             let validationErrors = req.validationErrors();
             if (validationErrors)
                 return res.status(400).json(validationErrors);
@@ -47,6 +48,7 @@ class SystemController {
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("totalOutputCount", "total output count").isInt();
             req.checkBody("location", "location should not be empty").notEmpty();
+            req.checkBody("note", "note should not be empty").notEmpty();
             let validationErrors = req.validationErrors();
             if (validationErrors)
                 return res.status(400).json(validationErrors);

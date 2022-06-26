@@ -64,6 +64,8 @@ class App {
         this.app.use("/api/operator", OperatorRouter_1.default);
         this.app.use("/api/operator-manager", OperatorManagerRouter_1.default);
         this.app.use("/api/file", FileRouter_1.default);
+        // Static route
+        this.app.use(express_1.default.static("/mnt/uploads/"));
     }
     startServer() {
         this.app.listen(this.port, () => {
