@@ -34,19 +34,16 @@ class UsedStock {
             }
         });
     }
-    updateInfo(updateData) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let field = { _id: mongojs_1.default.ObjectId(this.usedStockId) };
-            try {
-                let data = yield this.db.UPDATE_DOCUMENT_WITH_FIELD(this.usedStockCollection, field, { $set: updateData });
-                this.db.db.close();
-                return data;
-            }
-            catch (error) {
-                throw 500;
-            }
-        });
-    }
+    // async updateInfo(updateData: any) {
+    //     let field = { _id: mongojs.ObjectId(this.usedStockId) }
+    //     try {
+    //         let data = await this.db.UPDATE_DOCUMENT_WITH_FIELD(this.usedStockCollection, field, { $set: updateData })
+    //         this.db.db.close()
+    //         return data
+    //     } catch (error) {
+    //         throw 500
+    //     }
+    // }
     delete() {
         return __awaiter(this, void 0, void 0, function* () {
             let field = { _id: mongojs_1.default.ObjectId(this.usedStockId) };
