@@ -86,6 +86,8 @@ class AuthController {
             res.status(500).json({msg:"Server Error"})
         }
     }
+
+
     
 }
 export {AuthController}

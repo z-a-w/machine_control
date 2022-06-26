@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_validator_1 = __importDefault(require("express-validator"));
-const fileUpload = require("express-fileupload");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const SystemRouter_1 = __importDefault(require("./router/SystemRouter"));
 const WarehouseRouter_1 = __importDefault(require("./router/WarehouseRouter"));
 const StockRecordRouter_1 = __importDefault(require("./router/StockRecordRouter"));
@@ -20,6 +20,7 @@ const Assign_Router_1 = __importDefault(require("./router/Assign Router"));
 const LeaderManagerRouter_1 = __importDefault(require("./router/LeaderManagerRouter"));
 const OperatorRouter_1 = __importDefault(require("./router/OperatorRouter"));
 const OperatorManagerRouter_1 = __importDefault(require("./router/OperatorManagerRouter"));
+const FileRouter_1 = __importDefault(require("./router/FileRouter"));
 class App {
     constructor() {
         this.port = 3000;
@@ -45,7 +46,7 @@ class App {
         this.app.use(body_parser_1.default.json());
         this.app.use(body_parser_1.default.urlencoded({ extended: true }));
         this.app.use((0, express_validator_1.default)());
-        this.app.use(fileUpload({ createParentPath: true }));
+        this.app.use((0, express_fileupload_1.default)({ createParentPath: true }));
         // Use express application configs
         this.app.use((req, res, next) => { this.configs.map((config) => res.set(config.name, config.val)); next(); });
         // Use routes
@@ -62,6 +63,9 @@ class App {
         this.app.use("/api/assign", Assign_Router_1.default);
         this.app.use("/api/operator", OperatorRouter_1.default);
         this.app.use("/api/operator-manager", OperatorManagerRouter_1.default);
+        this.app.use("/api/file", FileRouter_1.default);
+        // Static route
+        this.app.use(express_1.default.static("/mnt/uploads/"));
     }
     startServer() {
         this.app.listen(this.port, () => {
