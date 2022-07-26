@@ -6,6 +6,6 @@ const leaderManagerController = new LeaderManagerController()
 
 router.get("/total-leader",leaderManagerController.totalLeader)
 router.post("/leader-with-range",leaderManagerController.leaderWithRange)
-router.get("search-leader/:searchText",leaderManagerController.searchLeader)
+router.get("/search-leader/:searchText",leaderManagerController.searchLeader)
 
 export default router
