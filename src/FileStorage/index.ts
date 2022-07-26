@@ -1,7 +1,7 @@
 const fs = require("fs-extra");
 class FileStorage {
   uploadTempDir: string =
-    "/home/mohmoh/work/machine/machine_control/dist/uploads";
+    "/home/zawhtetaung/Workspaces/machine_control/dist/uploads";
   uploadDistDir: string = "/mnt/uploads";
   staticRoute: string = "http://localhost:3000";
 

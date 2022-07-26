@@ -13,7 +13,7 @@ exports.FileStorage = void 0;
 const fs = require("fs-extra");
 class FileStorage {
     constructor() {
-        this.uploadTempDir = "/home/mohmoh/work/machine/machine_control/dist/uploads";
+        this.uploadTempDir = "/home/zawhtetaung/Workspaces/machine_control/dist/uploads";
         this.uploadDistDir = "/mnt/uploads";
         this.staticRoute = "http://localhost:3000";
     }

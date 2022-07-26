@@ -1,8 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import validator from "express-validator"
-const fileUpload = require("express-fileupload")
-
+import fileUpload from "express-fileupload"
 import SystemRouter from "./router/SystemRouter"
 import WarehouseRouter from "./router/WarehouseRouter"
 import StockRecordRouter from "./router/StockRecordRouter"

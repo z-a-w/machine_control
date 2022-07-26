@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_validator_1 = __importDefault(require("express-validator"));
-const fileUpload = require("express-fileupload");
+const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const SystemRouter_1 = __importDefault(require("./router/SystemRouter"));
 const WarehouseRouter_1 = __importDefault(require("./router/WarehouseRouter"));
 const StockRecordRouter_1 = __importDefault(require("./router/StockRecordRouter"));
@@ -46,7 +46,7 @@ class App {
         this.app.use(body_parser_1.default.json());
         this.app.use(body_parser_1.default.urlencoded({ extended: true }));
         this.app.use((0, express_validator_1.default)());
-        this.app.use(fileUpload({ createParentPath: true }));
+        this.app.use((0, express_fileupload_1.default)({ createParentPath: true }));
         // Use express application configs
         this.app.use((req, res, next) => { this.configs.map((config) => res.set(config.name, config.val)); next(); });
         // Use routes
