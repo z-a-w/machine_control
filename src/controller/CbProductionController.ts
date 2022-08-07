@@ -55,8 +55,8 @@ class CbProductionController {
 
         let cbProduction = new CbProduction(req.params.id)
         try {
-            let data = await cbProduction.insertRaw(req.params.rawId)
-            res.status(200).json(data)
+             await cbProduction.insertRaw(req.params.rawId)
+            res.status(200).json({msg:"Raw inserted!"})
         } catch (error) {
             res.status(error).json({ msg: "Server error" })
         }

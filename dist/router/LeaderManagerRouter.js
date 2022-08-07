@@ -9,5 +9,5 @@ const router = express_1.default.Router();
 const leaderManagerController = new LeaderManagerController_1.LeaderManagerController();
 router.get("/total-leader", leaderManagerController.totalLeader);
 router.post("/leader-with-range", leaderManagerController.leaderWithRange);
-router.get("search-leader/:searchText", leaderManagerController.searchLeader);
+router.get("/search-leader/:searchText", leaderManagerController.searchLeader);
 exports.default = router;

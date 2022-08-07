@@ -149,7 +149,7 @@ class CbProduction {
             }
             // Insert into the stock record
             try {
-                let stockData = yield this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.stockCollection, stockField);
+                let stockData = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.stockCollection, stockField);
                 let recordData = {
                     from: stockData.from,
                     item: rawId,

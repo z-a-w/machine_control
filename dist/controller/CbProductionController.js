@@ -72,8 +72,8 @@ class CbProductionController {
                 return res.status(400).json(validationErrors);
             let cbProduction = new CbProduction_1.CbProduction(req.params.id);
             try {
-                let data = yield cbProduction.insertRaw(req.params.rawId);
-                res.status(200).json(data);
+                yield cbProduction.insertRaw(req.params.rawId);
+                res.status(200).json({ msg: "Raw inserted!" });
             }
             catch (error) {
                 res.status(error).json({ msg: "Server error" });
