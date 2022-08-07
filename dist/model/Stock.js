@@ -13,11 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Stock = void 0;
+const dayjs_1 = __importDefault(require("dayjs"));
 const mongojs_1 = __importDefault(require("mongojs"));
 const db_1 = require("../db");
 class Stock {
     constructor(stockId = "not_supported") {
         this.stockCollection = "stocks";
+        this.stockDataCollection = "stockRecords";
         this.stockId = stockId;
         this.db = new db_1.DB();
     }
@@ -56,6 +58,26 @@ class Stock {
                 return data;
             }
             catch (error) {
+                throw 500;
+            }
+        });
+    }
+    getDataWithMonth(month, year) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let startOfMonth = (0, dayjs_1.default)().month(month).year(year).startOf("month").toISOString();
+            let endOfMonth = (0, dayjs_1.default)().month(month).year(year).endOf("month").toISOString();
+            let field = {
+                createdAt: {
+                    $gte: new Date(startOfMonth),
+                    $lte: new Date(endOfMonth)
+                },
+            };
+            try {
+                let data = yield this.db.GET_ALL_DOCUMENTS_WITH_FIELDS(this.stockDataCollection, field);
+                return data;
+            }
+            catch (error) {
+                console.log(error);
                 throw 500;
             }
         });

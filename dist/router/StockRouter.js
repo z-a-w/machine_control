@@ -10,4 +10,5 @@ const stockController = new StockController_1.StockController();
 router.get("/get-info/:id", stockController.getInfo);
 router.put("/update-info/:id", stockController.updateInfo);
 router.delete("/:id", stockController.delete);
+router.get("/get-data-with-month/:month/:year/:id", stockController.getDataWithMonth);
 exports.default = router;

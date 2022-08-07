@@ -18,9 +18,19 @@ class CbProduction {
         let field = { _id: mongojs.ObjectId(this.cbProductionId) }
         try {
             let data = await this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, field)
-            this.db.db.close()
+
+            let rawIdArr: Array<string> = []
+            // Get raw
+            data.raws.map((raw: any) => {
+                rawIdArr.push(raw.rawId)
+            })
+            console.log(rawIdArr)
+            let rawData = await this.db.GET_DATA_WITH_ARRAY_OF_ID(this.stockCollection, rawIdArr)
+            console.log(rawData)
+            data.raws = rawData
             return data
         } catch (error) {
+            console.log(error)
             throw 500
         }
     }

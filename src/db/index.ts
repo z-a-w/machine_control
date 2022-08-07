@@ -133,7 +133,7 @@ class DB {
         for (let i = 0; i < idArr.length; i++) {
             idArr[i] = mongojs.ObjectId(idArr[i])
         }
-        return new Promise((resolve:any,reject:any) =>{
+        return new Promise((resolve: any, reject: any) => {
             this.db[collectionName].find({
                 _id: {
                     $in: idArr

@@ -31,6 +31,7 @@ class WareHouseController {
     updateInfo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             req.checkParams("id", "id must be mongo Id").isMongoId();
+            req.checkBody("photo", "photo should not be empty").notEmpty();
             req.checkBody("name", "name should not be empty").notEmpty();
             req.checkBody("location", "location should not be empty").notEmpty();
             req.checkBody("note", "note should not be empty").notEmpty();
@@ -86,12 +87,14 @@ class WareHouseController {
             req.checkBody("photo", "photo should not be empty").notEmpty();
             req.checkBody("totalInstock", "totalInstock must be number").isInt();
             req.checkBody("unit", "unit should not be empty").notEmpty();
-            req.checkBody("detail", "detail should not be empty").notEmpty();
+            req.checkBody("note", "note should not be empty").notEmpty();
             req.checkBody("showAlertAt", "showAlertAt should not be empty").notEmpty();
             let validationError = req.validationErrors();
             if (validationError)
                 return res.status(400).json(validationError);
             req.body.from = req.params.id;
+            req.body.totalInstock = parseInt(req.body.totalInstock);
+            req.body.showAlertAt = parseInt(req.body.showAlertAt);
             req.body.createdAt = new Date();
             try {
                 let wareHouse = new Warehouse_1.WareHouse(req.params.id);

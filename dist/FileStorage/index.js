@@ -10,36 +10,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FileStorage = void 0;
+const Config_1 = require("../Config");
 const fs = require("fs-extra");
 class FileStorage {
     constructor() {
-        this.uploadTempDir = "/home/zawhtetaung/Workspaces/machine_control/dist/uploads";
-        this.uploadDistDir = "/mnt/uploads";
         this.staticRoute = "http://localhost:3000";
+        this.config = new Config_1.Config();
     }
     uploadPhoto(folder, fileName) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 //move file
-                fs.move(`${this.uploadTempDir}/${fileName}`, `${this.uploadDistDir}/photos/${folder}/${fileName}`);
+                fs.move(`${this.config.uploadTempDir}/${fileName}`, `${this.config.uploadDistDir}/photos/${folder}/${fileName}`);
                 //success return link
-                return `${this.staticRoute}/photos/${folder}/${fileName}`;
+                return `/photos/${folder}/${fileName}`;
             }
             catch (error) {
                 // onError return error
-                console.log(error);
-                throw new Error(error);
+                throw 500;
             }
         });
     }
     deletePhoto(folder, fileName) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let exists = yield fs.exists(`${this.uploadDistDir}/photos/${folder}/${fileName}`);
+                let exists = yield fs.exists(`${this.config.uploadDistDir}/photos/${folder}/${fileName}`);
                 if (!exists)
                     return;
                 try {
-                    yield fs.unlink(`${this.uploadDistDir}/photos/${folder}/${fileName}`);
+                    yield fs.unlink(`${this.config.uploadDistDir}/photos/${folder}/${fileName}`);
                     return;
                 }
                 catch (error) {

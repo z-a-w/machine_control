@@ -10,5 +10,5 @@ const systemController = new SystemController_1.SystemController();
 router.post("/create-warehouse", systemController.createWarehouse);
 router.get("/get-warehouses", systemController.getWarehouses);
 router.post("/create-cbproduction", systemController.createCbProduction);
-router.put("/get-cbproductions", systemController.getCbProductions);
+router.get("/get-cbproductions", systemController.getCbProductions);
 exports.default = router;

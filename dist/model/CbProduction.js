@@ -29,10 +29,19 @@ class CbProduction {
             let field = { _id: mongojs_1.default.ObjectId(this.cbProductionId) };
             try {
                 let data = yield this.db.GET_ONE_DOCUMENT_WITH_FIELDS(this.cbProductionCollection, field);
-                this.db.db.close();
+                let rawIdArr = [];
+                // Get raw
+                data.raws.map((raw) => {
+                    rawIdArr.push(raw.rawId);
+                });
+                console.log(rawIdArr);
+                let rawData = yield this.db.GET_DATA_WITH_ARRAY_OF_ID(this.stockCollection, rawIdArr);
+                console.log(rawData);
+                data.raws = rawData;
                 return data;
             }
             catch (error) {
+                console.log(error);
                 throw 500;
             }
         });
